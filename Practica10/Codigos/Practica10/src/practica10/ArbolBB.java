@@ -4,131 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class ArbolBB {
-    
-    /*Elementos del arbol(pueden ser de cualquier tipo)
-    para nuestro ejemplo los pondremos Integer.*/
-    /*public class Elemento{
-        private Integer i;
-        //Constructores
-        public Elemento(){}
-        public Elemento(Integer i){
-            this.i = i;
-        }
-    }*///Elemento
-    
-    //Nodos del arbol
-    public class Nodo{
-        //Estructura de un Nodo
-        /**************************/
-        /* Nodo * Elemento * Nodo */
-        /**************************/
-        
-        /*Los nodos son de tipo ArbolBB porque
-        vamos a hacer operaciones con ellos por
-        lo tanto necesitamos que sea asi.*/
-        private ArbolBB hder;
-        private ArbolBB hizq;
-        //private Elemento e;
-        private int e;
-        private Nodo(){
-            //e = null;
-            e=0;
-            hder = hizq = null;
-        }
-        public Nodo(int e){
-            e=0;
-            hder = hizq = null;
-        }
-        
-    }//Nodo
-    
-    public Nodo raiz;
-    
-    //Constructor del ABB
-    public ArbolBB(){
-        raiz = new Nodo();
-    }
-    
-    public boolean esVacio(){
-        return (raiz == null);
-    }
-    
-    public void insertar(int e){
-        if(esVacio()){
-            Nodo aux = new Nodo();
-            aux.e = e;
-            aux.hizq = new ArbolBB();
-            aux.hder = new ArbolBB();
-            raiz = aux;
-        }else{
-            if(e < raiz.e){
-                (raiz.hizq).insertar(e); 
-            }else if(e > raiz.e){
-                (raiz.hder).insertar(e);
-            }
-        }
-    }
-    
-    public ArbolBB buscar(int e){
-        ArbolBB aux = null;
-        if(!esVacio()){
-            if(e == raiz.e){
-            return this;
-            }else{
-                if(e < raiz.e){
-                    aux = raiz.hizq.buscar(e);
-                }else{
-                    aux = raiz.hder.buscar(e);
-                }
-            }
-        }
-        return aux;
-    } 
-    
-    public boolean existe(int e){
-        if(!esVacio()){
-            if(e == raiz.e){
-            return true;
-            }else{
-                if(e < raiz.e){
-                    raiz.hizq.existe(e);
-                }else{
-                    raiz.hder.existe(e);
-                }
-            }
-        }
-        return false;
-    }
-    public boolean esHoja(){
-        if(raiz.hizq.esVacio() && raiz.hder.esVacio())
-            return true;
-        return false;
-    }
-    
-    public void preOrden(){
-        if(!esVacio()){
-            System.out.println(raiz.e+", ");
-            raiz.hizq.preOrden();
-            raiz.hder.preOrden();
-        }
-    }
-    
-    public void inOrden(){
-        if(!esVacio()){
-            raiz.hizq.inOrden();
-            System.out.println(raiz.e+", ");
-            raiz.hder.inOrden();
-        }
-    }
-    public void postOrden(){
-        if(!esVacio()){
-            raiz.hizq.postOrden();
-            raiz.hder.postOrden();
-            System.out.println(raiz.e+", ");
-        }
-    }
-    
-    public void eliminar(int e){}
+
     public static void main(String[] args){
         ArbolBB a = new ArbolBB();
         Scanner s = new Scanner(System.in);
@@ -143,9 +19,129 @@ public class ArbolBB {
             a.insertar(arr[i]);
         }
         
-        a.preOrden();
-        a.inOrden();
-        a.postOrden();
+        a.preOrder();
+        System.out.println();
+        a.inOrder();
+        System.out.println();
+        a.posOrder();
         
     }
+    
+    private class Nodo{
+        private ArbolBB hd;
+        private ArbolBB hi;
+        private int dato;
+        
+        private Nodo(){
+            hd = null;
+            hi = null;
+            dato = 0;
+        }
+    }
+
+    public Nodo raiz;
+
+    public void abb(){
+        Nodo raiz = new Nodo();
+    }
+
+    public boolean esVacio(){
+        return (raiz == null);
+    }
+
+    public void insertar(int a){
+        if(esVacio()){
+            Nodo nuevo = new Nodo();
+            nuevo.dato = a;
+            nuevo.hd = new ArbolBB();
+            nuevo.hi = new ArbolBB();
+            raiz = nuevo;
+        }else{
+            if(a > raiz.dato) {
+                (raiz.hd).insertar(a);
+            }
+            if(a < raiz.dato){
+                (raiz.hi).insertar(a);
+            }
+        }
+    }
+
+    public void preOrder(){
+        if (!esVacio()) {
+            System.out.print( raiz.dato + ", "  );
+            raiz.hi.preOrder();
+            raiz.hd.preOrder();
+        }
+    }
+
+    public void inOrder(){
+        if (!esVacio()) {
+            raiz.hi.inOrder();
+            System.out.print( raiz.dato + ", "  );
+            raiz.hd.inOrder();
+        }
+    }
+
+    public void posOrder(){
+        if (!esVacio()) {
+            raiz.hd.posOrder();
+            raiz.hi.posOrder();
+            System.out.print( raiz.dato + ", "  );
+        }
+    }
+
+    public ArbolBB buscar(int a){
+        ArbolBB aux = null;
+        if(!esVacio()){
+            if(a == raiz.dato){
+            return this;
+            }else{
+                if (a < raiz.dato){
+                    aux = raiz.hi.buscar(a);
+                }else{
+                    aux = raiz.hd.buscar(a);
+                }
+            }
+        }
+        return aux;
+    }
+
+    public boolean existe(int a){
+        if (!esVacio()) {
+            if (a == raiz.dato) {
+                return true;
+            }
+            else {
+                if (a < raiz.dato) {
+                    raiz.hi.existe(a);
+                }else {
+                    raiz.hd.existe(a);
+                }
+            }
+        }
+        return false;
+    }
+
+    public int cantidad(){
+        if (esVacio()) {
+            return 0;
+        }else {
+            return (1 + raiz.hd.cantidad() + raiz.hi.cantidad());
+        }
+    }
+
+    public int altura() {
+        if (esVacio()) {
+            return 0;
+        }else {
+            return (1 + Math.max(((raiz.hi).altura()), ((raiz.hd).altura())));
+        }
+    }
+
+    public boolean esHoja() {
+        if( (raiz.hi).esVacio() && (raiz.hd).esVacio() )
+            return true;
+        return false;
+    }
+
 }//ArbolBB
