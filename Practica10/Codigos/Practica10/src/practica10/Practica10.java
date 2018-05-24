@@ -34,5 +34,6 @@ public class Practica10 {
             char c[] = k.nextElement().toCharArray();
             System.out.println(c[0]+" : "+v.nextElement());
         }
+        
     }
 }
