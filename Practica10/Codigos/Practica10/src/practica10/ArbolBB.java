@@ -24,6 +24,7 @@ public class ArbolBB {
         a.inOrder();
         System.out.println();
         a.posOrder();
+        System.out.println();
         
     }
     
@@ -31,7 +32,11 @@ public class ArbolBB {
         private ArbolBB hd;
         private ArbolBB hi;
         private int dato;
-        
+        private Nodo(int dato){
+            hd = null;
+            hi = null;
+            this.dato = dato;
+        }
         private Nodo(){
             hd = null;
             hi = null;
@@ -40,19 +45,18 @@ public class ArbolBB {
     }
 
     public Nodo raiz;
-
-    public void abb(){
-        Nodo raiz = new Nodo();
+    
+    public ArbolBB(){
+        raiz = null;
     }
-
+    
     public boolean esVacio(){
         return (raiz == null);
     }
 
     public void insertar(int a){
         if(esVacio()){
-            Nodo nuevo = new Nodo();
-            nuevo.dato = a;
+            Nodo nuevo = new Nodo(a);
             nuevo.hd = new ArbolBB();
             nuevo.hi = new ArbolBB();
             raiz = nuevo;
